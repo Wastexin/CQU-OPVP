@@ -17,16 +17,18 @@ import joblib
 from rdkitfingerprint import *
 from cdkfingerprint import *
 import pickle
+current_path = os.path.dirname(__file__)
+print(current_path)
 
 
 def SelectAlgorithm(algorithmtype):
-    job = joblib.load('RandomForest_Regression_Morgan.pkl')
+    job = joblib.load(  current_path + '/RandomForest_Regression_Morgan.pkl')
     if algorithmtype ==0:
-        job = joblib.load('RandomForest_Regression_Morgan.pkl')
+        job = joblib.load(current_path + '/RandomForest_Regression_Morgan.pkl')
     elif algorithmtype ==1:
-        job = joblib.load('SVM_Regression_Hybridization.pkl')
+        job = joblib.load(current_path + '/SVM_Regression_Hybridization.pkl')
     elif algorithmtype == 2:
-        job = joblib.load('gbdt.joblib')
+        job = joblib.load(current_path + '/gbdt.joblib')
     return job
 
 def RegressionPredit(smiles, al):
