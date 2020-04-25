@@ -6,7 +6,7 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-from wtforms import Form, StringField, SubmitField, SelectField, SelectMultipleField, TextAreaField
+from wtforms import Form, StringField, SubmitField, SelectField, SelectMultipleField, TextAreaField, FileField
 from wtforms.validators import DataRequired, Length, Required
 
 class PredictForm(Form):
@@ -31,6 +31,7 @@ class ConvertForm(Form):
                                                ('7', 'CDK-MACCSFingerprint'), ('8', 'CDK-PubchemFingerprint'),
                                                ('9', 'CDK-ExtendedFingerprint'),
                                                ('9', 'CDK-HybridizationFingerprint')])
+    file = FileField('file')
     submit = SubmitField('Submit')
 
 #

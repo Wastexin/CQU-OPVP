@@ -18,7 +18,7 @@ from rdkitfingerprint import *
 from cdkfingerprint import *
 import pickle
 current_path = os.path.dirname(__file__)
-print(current_path)
+#print(current_path)
 
 
 def SelectAlgorithm(algorithmtype):

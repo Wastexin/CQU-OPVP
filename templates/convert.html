@@ -11,11 +11,11 @@
                 <div class="row clearfix" style="background-color: rgba(255,255,255,0.77);margin-top:5px;height: 460px;">
 
                     <div class="col-md-6 column" style="top: 10%;left: 3%;">
-                        <form role="form">
+                        <form role="form" action = "{{ url_for('convert') }}" method = "POST">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">请输入SMILES</label>
                                 <div>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" style="width: 70%;display: inline;" />
+                                    {{ form.smiles(style="width: 70%") }}
                                     <button type="button" class="btn btn-warning" title="Copy to your clipboard"  style="width: 20%;display: inline;"
                                             data-container="body" data-toggle="popover" data-placement="right"  data-content="C(C=CC1)=C(C=1C(=O)O)O">
                                         Example
@@ -27,14 +27,15 @@
                             <div class="form-group">
                                 <div class="dropdown">
                                     <label for="exampleInputEmail1">选择指纹类型</label>
-                                    <select class="form-control" data-style="btn-primary" style="width: 70%;">
-                                        <option></option>
-                                        <option value="PA">Pennsylvania</option>
-                                        <option value="CT">Connecticut</option>
-                                        <option value="NY">New York</option>
-                                        <option value="MD">Maryland</option>
-                                        <option value="VA">Virginia</option>
-                                    </select>
+                                    {{ form.fingerprint(class="form-control btn-secondary", style="width: 70%") }}
+                                    {#                                    <select class="form-control" data-style="btn-primary" style="width: 70%;">#}
+                                    {#                                        <option></option>#}
+                                    {#                                        <option value="PA">Pennsylvania</option>#}
+                                    {#                                        <option value="CT">Connecticut</option>#}
+                                    {#                                        <option value="NY">New York</option>#}
+                                    {#                                        <option value="MD">Maryland</option>#}
+                                    {#                                        <option value="VA">Virginia</option>#}
+                                    {#                                    </select>#}
 
                                 </div>
                             </div>
@@ -42,13 +43,19 @@
                         </form>
                     </div>
                     <div class="col-md-6 column" style="top: 10%;left: 3%;">
-                        <form role="form">
+                        <form role="form" action = "{{ url_for('convert') }}" method = "POST" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">或上传文件</label>
+
+                                <label for="upload">上传文件（支持文件格式.csv）</label>
                                 <div class="input-group mb-3">
-                                    <div class="custom-file" style="width: 83%;">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" ">
-                                        <label class="custom-file-label" for="inputGroupFile01" >Choose file</label>
+                                    <div class="custom-file" style="width: 100%;">
+                                        {#                                        <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" ">#}
+                                        {#                                        <label class="custom-file-label" for="inputGroupFile01" >Choose file</label>#}
+                                        {{ form.file}}
+                                        <button type="button" class="btn btn-warning" title="。csv文件格式要求"  style="width: 20%;display: inline;"
+                                                data-container="body" data-toggle="popover" data-placement="right"  data-content="默认：第一列是序号，第二列是材料名称，，第三列是PCE，第四列是SMILES">
+                                            提示
+                                        </button>
                                     </div>
                                 </div>
 
@@ -56,14 +63,15 @@
                             <div class="form-group">
                                 <div class="dropdown">
                                     <label for="exampleInputEmail1">选择指纹类型</label>
-                                    <select class="form-control" data-style="btn-primary" style="width: 70%;">
-                                        <option></option>
-                                        <option value="PA">Pennsylvania</option>
-                                        <option value="CT">Connecticut</option>
-                                        <option value="NY">New York</option>
-                                        <option value="MD">Maryland</option>
-                                        <option value="VA">Virginia</option>
-                                    </select>
+                                    {{ form.fingerprint(class="form-control btn-secondary", style="width: 70%") }}
+                                    {#                                    <select class="form-control" data-style="btn-primary" style="width: 70%;">#}
+                                    {#                                        <option></option>#}
+                                    {#                                        <option value="PA">Pennsylvania</option>#}
+                                    {#                                        <option value="CT">Connecticut</option>#}
+                                    {#                                        <option value="NY">New York</option>#}
+                                    {#                                        <option value="MD">Maryland</option>#}
+                                    {#                                        <option value="VA">Virginia</option>#}
+                                    {#                                    </select>#}
 
                                 </div>
                             </div>

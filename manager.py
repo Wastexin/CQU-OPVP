@@ -3,10 +3,19 @@ from flask import render_template, request
 from form import *
 
 from predict.views import *
+from convert.views import *
+from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'csv'}
 jpype.addClassPath('cdk-2.3.jar')
 startJVM(getDefaultJVMPath(), "-ea")
+
+
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 # @app.route('/')
 # def base():
@@ -55,10 +64,32 @@ def predict():
 
 
 
-@app.route('/convert')
+@app.route('/convert', methods = ['POST', 'GET'])
 def convert():
+    form = ConvertForm()
+    if request.method == 'POST':
+        result = request.form
+        #print(request.files)
+        try:
+            if result.get('smiles') != None:
+                f_func = FingerprintType(int(result.get('fingerprint')))
+                SingleSmilesConvert(f_func, result.get('smiles'), savename='csv/fingerprint.csv')
 
-    return render_template('convert.html')
+                return send_file('csv/fingerprint.csv', mimetype='text/csv',
+                                 as_attachment=True, attachment_filename="fingerprint.csv")
+
+
+            elif request.files != None:
+                request.files.get('file').save('uploads/fingerprint.csv')
+                file = 'uploads/fingerprint.csv'
+                print(result.get('fingerprint'))
+                f_func = FingerprintType(int(result.get('fingerprint')))
+                FileSmilesConvert(f_func, namecol=1, PCEcol=2, smilescol=3, filename='uploads/fingerprint.csv', savename='csv/file_fingerprint.csv')
+                return send_file('csv/file_fingerprint.csv', mimetype='text/csv',
+                                 as_attachment=True, attachment_filename="file_fingerprint.csv")
+        except:
+            pass
+    return render_template('convert.html',form=form)
 
 
 @app.route('/about')
@@ -79,7 +110,7 @@ def create_app(test_config=None):
     #startJVM(getDefaultJVMPath(), "-ea")
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        # DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
 
     if test_config is None:
